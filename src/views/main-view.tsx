@@ -6,6 +6,7 @@ import {
   Link
 } from "react-router-dom";
 import { Button } from '../components/button';
+import { PoolProvider } from '../context/pool';
 import HomeView from './home-view';
 import RoundRobinView from './round-robin-view';
 
@@ -25,7 +26,9 @@ export const MainView = () => {
             <HomeView />
           </Route>
           <Route path="/roundrobin">
-            <RoundRobinView />
+            <PoolProvider>
+              <RoundRobinView />
+            </PoolProvider>
           </Route>
         </Switch>
       </Router>
