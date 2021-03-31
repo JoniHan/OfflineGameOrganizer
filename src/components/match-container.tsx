@@ -6,6 +6,13 @@ interface IMatchContainerProps {
     stationId: number;
 }
 
+const Div = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+`;
+
 export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
     const elementArray: JSX.Element[] = props.matches.map(
         (match, idx) => {
@@ -13,10 +20,10 @@ export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
         }
     );
     return (
-        <div>
-            <h2>{`Matches for station ${props.stationId}`}</h2>
+        <Div>
+            <h3>{`Matches for station ${props.stationId}`}</h3>
             {elementArray}
-        </div>
+        </Div>
     );
 }
 

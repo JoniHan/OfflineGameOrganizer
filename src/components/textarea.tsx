@@ -7,10 +7,10 @@ interface ITextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElemen
 
 export const TextArea: React.FC<ITextAreaProps> = ({ labelText, ...rest }) => {
     return (
-        <>
+        <div>
             <label htmlFor={rest.id}>{labelText}</label>
             <textarea {...rest} />
-        </>
+        </div>
     );
 }
 

@@ -6,6 +6,7 @@ interface IMatchContainerGroupProps {
     matchesPerStation: string[][];
 }
 
+
 export const MatchContainerGroup: React.FC<IMatchContainerGroupProps> = (props) => {
     if (!props.matchesPerStation || props.matchesPerStation.length === 0 || props.matchesPerStation[0].length === 0) {
         return (<></>);
@@ -13,7 +14,7 @@ export const MatchContainerGroup: React.FC<IMatchContainerGroupProps> = (props) 
     const elementArray: JSX.Element[] = props.matchesPerStation.map(
         (stationMatches, idx) => {
             return (
-                <div key={idx}>
+                <div className={'col-md-6'} key={idx}>
                     <MatchContainer matches={stationMatches} stationId={idx + 1}></MatchContainer>
                 </div>
             )

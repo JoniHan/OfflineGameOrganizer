@@ -1,3 +1,4 @@
+import { getByPlaceholderText } from '@testing-library/dom';
 import * as React from 'react';
 import styled from 'styled-components';
 import PoolContext from '../context/pool';
@@ -15,9 +16,8 @@ export const PoolInputGroup: React.FC<IPoolInputGroupPorps> = (props) => {
         const elementArray: JSX.Element[] = [];
         for (let i = 0; i < props.count; i++) {
             elementArray.push(
-                <>
-                    <TextArea
-                        key={i}
+                <div key={i} className={'col-md-6'}>
+                    <TextArea className={'form-control'}
                         onChange={
                             (e) => {
                                 let pools = poolContext.pools;
@@ -25,11 +25,15 @@ export const PoolInputGroup: React.FC<IPoolInputGroupPorps> = (props) => {
                                 poolContext.setPools(pools);
                             }
                         }
-                        labelText={`Participants for pool ${i + 1}, separate with comma, and nothing else`} />
-                </>
+                        labelText={`Participants for pool ${i + 1}`} />
+                </div>
             );
         }
-        return (<>{elementArray}</>);
+        return (
+            <>
+                {elementArray}
+            </>
+        );
     }
 }
 
