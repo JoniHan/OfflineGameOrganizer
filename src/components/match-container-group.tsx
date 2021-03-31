@@ -1,5 +1,4 @@
 import * as React from 'react';
-import styled from 'styled-components';
 import MatchContainer from './match-container';
 
 interface IMatchContainerGroupProps {
@@ -8,7 +7,7 @@ interface IMatchContainerGroupProps {
 
 
 export const MatchContainerGroup: React.FC<IMatchContainerGroupProps> = (props) => {
-    if (!props.matchesPerStation || props.matchesPerStation.length === 0 || props.matchesPerStation[0].length === 0) {
+    if (props.matchesPerStation[0][0].length === 0) {
         return (<></>);
     }
     const elementArray: JSX.Element[] = props.matchesPerStation.map(

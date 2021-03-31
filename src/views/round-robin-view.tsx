@@ -7,24 +7,25 @@ import PoolInputGroup from '../components/pool-input-group';
 import PoolContext from '../context/pool';
 import { roundRobinMatches } from '../utils/roundrobin';
 
+const TitleWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+`;
+
+const ButtonWrapper = styled.div`
+    padding-top: 10px;
+    padding-bottom: 10px;
+`;
+
+
 export const RoundRobinView = () => {
     const [stationCount, setStationCount] = React.useState(0);
     const [poolCount, setPoolCount] = React.useState(0);
     const [stationMatches, setStationMatches] = React.useState([['']]);
     const poolContext = React.useContext(PoolContext);
-
-    const TitleWrapper = styled.div`
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-    `;
-
-    const ButtonWrapper = styled.div`
-        padding-top: 10px;
-        padding-bottom: 10px;
-    `;
-
 
     return (
         <>
@@ -62,7 +63,7 @@ export const RoundRobinView = () => {
                                     }
                                 }
                                 type={'number'}
-                                labelText={'pool count'}
+                                labelText={'Pool count'}
                             />
                         </div>
                     </div>

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import styled from 'styled-components';
 
 interface ITextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
     labelText: string;

@@ -1,6 +1,4 @@
-import { getByPlaceholderText } from '@testing-library/dom';
 import * as React from 'react';
-import styled from 'styled-components';
 import PoolContext from '../context/pool';
 import { TextArea } from './textarea';
 
