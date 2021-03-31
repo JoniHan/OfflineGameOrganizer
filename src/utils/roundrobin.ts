@@ -11,7 +11,6 @@ export const roundRobinMatches = (pools: string[]) => {
 };
 
 export const allMatches = (pools: [][][]) => {
-    console.log('test');
     const matchArray: [][] = [];
     pools.forEach(pool => {
         pool.forEach(round => {

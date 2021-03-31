@@ -52,7 +52,6 @@ export const RoundRobinView = () => {
                     const matches = roundRobinMatches(poolContext.pools);
                     let stationId = 0;
                     matches.forEach((match: string[]) => {
-                        console.log()
                         if (stationId === stationCount) {
                             stationId = 0;
                         }
@@ -60,7 +59,6 @@ export const RoundRobinView = () => {
                         stationId++;
                     });
                     setStationMatches(stationMatchesArray);
-                    console.log(stationMatches);
                 }}>
                 {'Calculate'}
             </Button>
