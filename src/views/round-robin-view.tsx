@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '../components/button';
 import { Input } from '../components/input';
+import MatchContainerGroup from '../components/match-container-group';
 import PoolInputGroup from '../components/pool-input-group';
 import PoolContext from '../context/pool';
 import { roundRobinMatches } from '../utils/roundrobin';
@@ -63,6 +64,8 @@ export const RoundRobinView = () => {
                 }}>
                 {'Calculate'}
             </Button>
+            <hr />
+            <MatchContainerGroup matchesPerStation={stationMatches} />
         </>
     );
 }
