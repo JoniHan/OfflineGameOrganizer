@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import styled from 'styled-components';
 import { Button } from '../components/button';
+import { OccupiedProvider } from '../context/occupied';
 import { PoolProvider } from '../context/pool';
 import HomeView from './home-view';
 import RoundRobinView from './round-robin-view';
@@ -32,7 +33,9 @@ export const MainView = () => {
           </Route>
           <Route path="/roundrobin">
             <PoolProvider>
-              <RoundRobinView />
+              <OccupiedProvider>
+                <RoundRobinView />
+              </OccupiedProvider>
             </PoolProvider>
           </Route>
         </Switch>

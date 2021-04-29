@@ -11,7 +11,7 @@ export const PoolContext = React.createContext<IPoolContext>({
 });
 
 export const PoolProvider: React.FC = ({children}) => {
-    const [pools, setPools] = React.useState(['']);
+    const [pools, setPools] = React.useState([] as string[]);
 
     return (
         <PoolContext.Provider value={{
