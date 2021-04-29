@@ -1,13 +1,14 @@
 import * as React from 'react';
 import MatchContainer from './match-container';
+import { IStationMatch } from '../views/round-robin-view';
 
 interface IMatchContainerGroupProps {
-    matchesPerStation: string[][];
+    matchesPerStation: IStationMatch[][];
 }
 
 
 export const MatchContainerGroup: React.FC<IMatchContainerGroupProps> = (props) => {
-    if (props.matchesPerStation[0][0].length === 0) {
+    if (!props.matchesPerStation[0][0]) {
         return (<></>);
     }
     const elementArray: JSX.Element[] = props.matchesPerStation.map(

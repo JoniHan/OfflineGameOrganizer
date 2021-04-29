@@ -1,8 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { IStationMatch } from '../views/round-robin-view';
 
 interface IMatchContainerProps {
-    matches: string[];
+    matches: IStationMatch[];
     stationId: number;
 }
 
@@ -16,7 +17,7 @@ const Div = styled.div`
 export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
     const elementArray: JSX.Element[] = props.matches.map(
         (match, idx) => {
-            return (<p key={idx}>{match}</p>);
+            return (<p key={idx}>{match.matchCaption}</p>);
         }
     );
     return (

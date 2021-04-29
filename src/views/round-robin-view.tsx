@@ -20,11 +20,21 @@ const ButtonWrapper = styled.div`
     padding-bottom: 10px;
 `;
 
+export interface IPlayerInfo {
+    id: string;
+    name: string;
+};
+
+export interface IStationMatch {
+    p1Id: string;
+    p2Id: string;
+    matchCaption: string;
+};
 
 export const RoundRobinView = () => {
     const [stationCount, setStationCount] = React.useState(0);
     const [poolCount, setPoolCount] = React.useState(0);
-    const [stationMatches, setStationMatches] = React.useState([['']]);
+    const [stationMatches, setStationMatches] = React.useState([[]] as IStationMatch[][]);
     const poolContext = React.useContext(PoolContext);
 
     return (
@@ -82,15 +92,15 @@ export const RoundRobinView = () => {
                         <ButtonWrapper className={'col-md-12'}>
                             <Button disabled={(stationCount > 0 && poolCount > 0) ? false : true} className={'btn btn-primary form-control'} onClick={
                                 () => {
-                                    const stationMatchesArray: string[][] = [];
+                                    const stationMatchesArray: IStationMatch[][] = [];
                                     for (let i = 0; i < stationCount; i++) {
                                         stationMatchesArray.push([]);
                                     };
                                     const matches = roundRobinMatches(poolContext.pools);
                                     let stationId = 0;
-                                    matches.forEach((match: string[]) => {
-                                        const p1 = match[0].trim();
-                                        const p2 = match[1].trim();
+                                    matches.forEach((players: IPlayerInfo[]) => {
+                                        const p1 = players[0].name.trim();
+                                        const p2 = players[1].name.trim();
 
                                         if (!p1.length || !p2.length) {
                                             return;
@@ -99,7 +109,8 @@ export const RoundRobinView = () => {
                                         if (stationId === stationCount) {
                                             stationId = 0;
                                         }
-                                        stationMatchesArray[stationId].push(`${match[0]} VS. ${match[1]}`);
+                                        const matchObject: IStationMatch = {p1Id: players[0].id, p2Id: players[1].id, matchCaption: `${p1} VS. ${p2}`};
+                                        stationMatchesArray[stationId].push(matchObject);
                                         stationId++;
                                     });
                                     setStationMatches(stationMatchesArray);
