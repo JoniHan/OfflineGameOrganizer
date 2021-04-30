@@ -77,6 +77,8 @@ export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
                             className={'btn btn-primary btn-sm'}
                             onClick={
                                 () => {
+                                    // TODO: FIX ME SO THAT EVERY STATION WORKS WORKS, NOT ONLY THE LAST ONE
+                                    // TODO: Cleaner rendering cycle
                                     matchContext.setCompletedMatches([...matchContext.completedMatches, match.matchId]);
                                     const p1Index = matchContext.occupants.indexOf(match.p1Id);
                                     const p2Index = matchContext.occupants.indexOf(match.p2Id);

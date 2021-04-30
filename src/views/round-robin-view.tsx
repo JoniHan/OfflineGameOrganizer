@@ -96,6 +96,7 @@ export const RoundRobinView = () => {
                         <ButtonWrapper className={'col-md-12'}>
                             <Button disabled={(stationCount > 0 && poolCount > 0) ? false : true} className={'btn btn-primary form-control'} onClick={
                                 () => {
+                                    // TODO: Fix a bug where it matches the same person on different stations
                                     const stationMatchesArray: IStationMatch[][] = [];
                                     for (let i = 0; i < stationCount; i++) {
                                         stationMatchesArray.push([]);
