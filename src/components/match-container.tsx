@@ -1,6 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import MatchContext from '../context/match';
 import { IStationMatch } from '../views/round-robin-view';
+import Button from './button';
 
 interface IMatchContainerProps {
     matches: IStationMatch[];
@@ -15,9 +17,27 @@ const Div = styled.div`
 `;
 
 export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
+    const matchContext = React.useContext(MatchContext);
+
     const elementArray: JSX.Element[] = props.matches.map(
         (match, idx) => {
-            return (<p key={idx}>{match.matchCaption}</p>);
+            return (
+                <Div key={idx}>
+                    <p>{match.matchCaption}</p>
+                    <Button
+                        onClick={
+                            () => {
+                                const completedMatchesToAppend = matchContext.completedMatches;
+                                completedMatchesToAppend.push(match.matchId);
+                                matchContext.setCompletedMatches(completedMatchesToAppend);
+                            }
+                        }
+                        disabled={matchContext.completedMatches.indexOf(match.matchId) > -1}
+                    >
+                        {matchContext.completedMatches.indexOf(match.matchId) > -1 ? 'Match completed' : 'Complete match' }
+                    </Button>
+                </Div>
+            );
         }
     );
     return (
