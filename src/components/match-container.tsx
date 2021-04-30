@@ -17,7 +17,7 @@ const Div = styled.div`
 `;
 
 export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
-    // TODO: Does not rerender, does not disable button
+    
     const matchContext = React.useContext(MatchContext);
 
     const elementArray: JSX.Element[] = props.matches.map(
@@ -28,9 +28,7 @@ export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
                     <Button
                         onClick={
                             () => {
-                                const completedMatchesToAppend = matchContext.completedMatches;
-                                completedMatchesToAppend.push(match.matchId);
-                                matchContext.setCompletedMatches(completedMatchesToAppend);
+                                matchContext.setCompletedMatches([...matchContext.completedMatches, match.matchId]);
                             }
                         }
                         disabled={matchContext.completedMatches.indexOf(match.matchId) > -1}
