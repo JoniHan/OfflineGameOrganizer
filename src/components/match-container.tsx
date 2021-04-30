@@ -87,26 +87,42 @@ export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
                                     const occupiedStationRemovedArray = matchContext.occupiedStations;
                                     const ongoingMatchesRemovedArray = matchContext.ongoingMatches;
 
-                                    if (p1Index > -1) {
-                                        occupantsRemovedArray.splice(p1Index, 1);
-                                    }
-
-                                    if (p2Index > -1) {
-                                        occupantsRemovedArray.splice(p2Index, 1);
-                                    }
-
+                                    
                                     
                                     if (ongoingMatchIndex > -1) {
                                         ongoingMatchesRemovedArray.splice(ongoingMatchIndex, 1);
+                                        if (p1Index > -1) {
+                                            occupantsRemovedArray.splice(p1Index, 1);
+                                        }
+                                        
+                                        if (p2Index > -1) {
+                                            occupantsRemovedArray.splice(p2Index, 1);
+                                        }
+                                        if (stationIndex > -1) {
+                                            occupiedStationRemovedArray.splice(stationIndex, 1);
+                                        }
                                     }
                                     
-                                    if (stationIndex > -1) {
-                                        occupiedStationRemovedArray.splice(stationIndex, 1);
-                                    }
-                                    
+
                                     matchContext.setOccupants([...occupantsRemovedArray]);
                                     matchContext.setOccupiedStations([...occupiedStationRemovedArray]);
                                     matchContext.setOngoingMatches([...ongoingMatchesRemovedArray]);
+
+                                    const stationIndexNew = matchContext.occupiedStations.indexOf(props.stationId - 1);
+                                    if (stationIndexNew === -1) {
+                                        // station cleared, find a new match for the station
+                                        props.matches.forEach((match: IStationMatch) => {
+                                            const p1IndexNew = matchContext.occupants.indexOf(match.p1Id);
+                                            const p2IndexNew = matchContext.occupants.indexOf(match.p2Id);
+                                            const ongoingMatchIndexNew = matchContext.ongoingMatches.indexOf(match.matchId);
+    
+                                            if (p1IndexNew === -1 && p2IndexNew === -1 && stationIndexNew === -1 && ongoingMatchIndexNew === -1) {
+                                                matchContext.setOccupiedStations([...matchContext.occupiedStations, props.stationId - 1]);
+                                                matchContext.setOccupants([...matchContext.occupants, match.p1Id, match.p2Id]);
+                                                matchContext.setOngoingMatches([...matchContext.ongoingMatches, match.matchId]);
+                                            }
+                                        });
+                                    }
                                 }
                             }
                             disabled={matchContext.completedMatches.indexOf(match.matchId) > -1}
@@ -133,25 +149,42 @@ export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
                                     const occupiedStationRemovedArray = matchContext.occupiedStations;
                                     const ongoingMatchesRemovedArray = matchContext.ongoingMatches;
 
-                                    if (p1Index > -1) {
-                                        occupantsRemovedArray.splice(p1Index, 1);
-                                    }
-
-                                    if (p2Index > -1) {
-                                        occupantsRemovedArray.splice(p2Index, 1);
-                                    }
-
-                                    if (stationIndex > -1) {
-                                        occupiedStationRemovedArray.splice(stationIndex, 1);
-                                    }
-
+                                    
+                                    
                                     if (ongoingMatchIndex > -1) {
                                         ongoingMatchesRemovedArray.splice(ongoingMatchIndex, 1);
+                                        if (p1Index > -1) {
+                                            occupantsRemovedArray.splice(p1Index, 1);
+                                        }
+                                        
+                                        if (p2Index > -1) {
+                                            occupantsRemovedArray.splice(p2Index, 1);
+                                        }
+                                        if (stationIndex > -1) {
+                                            occupiedStationRemovedArray.splice(stationIndex, 1);
+                                        }
                                     }
+                                    
 
                                     matchContext.setOccupants([...occupantsRemovedArray]);
                                     matchContext.setOccupiedStations([...occupiedStationRemovedArray]);
                                     matchContext.setOngoingMatches([...ongoingMatchesRemovedArray]);
+
+                                    const stationIndexNew = matchContext.occupiedStations.indexOf(props.stationId - 1);
+                                    if (stationIndexNew === -1) {
+                                        // station cleared, find a new match for the station
+                                        props.matches.forEach((match: IStationMatch) => {
+                                            const p1IndexNew = matchContext.occupants.indexOf(match.p1Id);
+                                            const p2IndexNew = matchContext.occupants.indexOf(match.p2Id);
+                                            const ongoingMatchIndexNew = matchContext.ongoingMatches.indexOf(match.matchId);
+    
+                                            if (p1IndexNew === -1 && p2IndexNew === -1 && stationIndexNew === -1 && ongoingMatchIndexNew === -1) {
+                                                matchContext.setOccupiedStations([...matchContext.occupiedStations, props.stationId - 1]);
+                                                matchContext.setOccupants([...matchContext.occupants, match.p1Id, match.p2Id]);
+                                                matchContext.setOngoingMatches([...matchContext.ongoingMatches, match.matchId]);
+                                            }
+                                        });
+                                    }
                                 }
                             }
                             disabled={matchContext.completedMatches.indexOf(match.matchId) > -1}
@@ -179,25 +212,42 @@ export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
                                 const occupiedStationRemovedArray = matchContext.occupiedStations;
                                 const ongoingMatchesRemovedArray = matchContext.ongoingMatches;
 
-                                if (p1Index > -1) {
-                                    occupantsRemovedArray.splice(p1Index, 1);
-                                }
-
-                                if (p2Index > -1) {
-                                    occupantsRemovedArray.splice(p2Index, 1);
-                                }
-
-                                if (stationIndex > -1) {
-                                    occupiedStationRemovedArray.splice(stationIndex, 1);
-                                }
-
+                                
+                                
                                 if (ongoingMatchIndex > -1) {
                                     ongoingMatchesRemovedArray.splice(ongoingMatchIndex, 1);
+                                    if (p1Index > -1) {
+                                        occupantsRemovedArray.splice(p1Index, 1);
+                                    }
+                                    
+                                    if (p2Index > -1) {
+                                        occupantsRemovedArray.splice(p2Index, 1);
+                                    }
+                                    if (stationIndex > -1) {
+                                        occupiedStationRemovedArray.splice(stationIndex, 1);
+                                    }
                                 }
+                                
 
                                 matchContext.setOccupants([...occupantsRemovedArray]);
                                 matchContext.setOccupiedStations([...occupiedStationRemovedArray]);
                                 matchContext.setOngoingMatches([...ongoingMatchesRemovedArray]);
+
+                                const stationIndexNew = matchContext.occupiedStations.indexOf(props.stationId - 1);
+                                if (stationIndexNew === -1) {
+                                    // station cleared, find a new match for the station
+                                    props.matches.forEach((match: IStationMatch) => {
+                                        const p1IndexNew = matchContext.occupants.indexOf(match.p1Id);
+                                        const p2IndexNew = matchContext.occupants.indexOf(match.p2Id);
+                                        const ongoingMatchIndexNew = matchContext.ongoingMatches.indexOf(match.matchId);
+
+                                        if (p1IndexNew === -1 && p2IndexNew === -1 && stationIndexNew === -1 && ongoingMatchIndexNew === -1) {
+                                            matchContext.setOccupiedStations([...matchContext.occupiedStations, props.stationId - 1]);
+                                            matchContext.setOccupants([...matchContext.occupants, match.p1Id, match.p2Id]);
+                                            matchContext.setOngoingMatches([...matchContext.ongoingMatches, match.matchId]);
+                                        }
+                                    });
+                                }
                             }
                         }
                         disabled={matchContext.completedMatches.indexOf(match.matchId) > -1}
