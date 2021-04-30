@@ -17,6 +17,7 @@ const Div = styled.div`
 `;
 
 export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
+    // TODO: Does not rerender, does not disable button
     const matchContext = React.useContext(MatchContext);
 
     const elementArray: JSX.Element[] = props.matches.map(
