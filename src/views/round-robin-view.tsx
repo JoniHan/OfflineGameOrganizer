@@ -7,6 +7,7 @@ import PoolInputGroup from '../components/pool-input-group';
 import PoolContext from '../context/pool';
 import { roundRobinMatches } from '../utils/roundrobin';
 import { v4 as uuidv4 } from 'uuid';
+import MatchContext from '../context/match';
 
 const TitleWrapper = styled.div`
     display: flex;
@@ -38,6 +39,7 @@ export const RoundRobinView = () => {
     const [poolCount, setPoolCount] = React.useState(0);
     const [stationMatches, setStationMatches] = React.useState([[]] as IStationMatch[][]);
     const poolContext = React.useContext(PoolContext);
+    const matchContext = React.useContext(MatchContext);
 
     return (
         <>
@@ -100,6 +102,9 @@ export const RoundRobinView = () => {
                                     };
                                     const matches = roundRobinMatches(poolContext.pools);
                                     let stationId = 0;
+                                    let occupiedStationsArray: number[] = [];
+                                    let occupantsArray: string[] = [];
+                                    let OngoingMatchesArray: string[] = [];
                                     matches.forEach((players: IPlayerInfo[]) => {
                                         const p1 = players[0].name.trim();
                                         const p2 = players[1].name.trim();
@@ -113,8 +118,20 @@ export const RoundRobinView = () => {
                                         }
                                         const matchObject: IStationMatch = {matchId: uuidv4(), p1Id: players[0].id, p2Id: players[1].id, matchCaption: `${p1} VS. ${p2}`};
                                         stationMatchesArray[stationId].push(matchObject);
-                                        stationId++;
-                                    });
+
+                                        if (OngoingMatchesArray.indexOf(matchObject.matchId) === -1 && occupiedStationsArray.indexOf(stationId) === -1 && occupantsArray.indexOf(players[0].id) === -1 && matchContext.occupants.indexOf(players[1].id) === -1) {
+                                                // setup not reserved, players not playing, match not ongoing, fix a game
+                                                occupiedStationsArray.push(stationId);
+                                                occupantsArray.push(players[0].id);
+                                                occupantsArray.push(players[1].id);
+                                                OngoingMatchesArray.push(matchObject.matchId);
+                                            }
+                                            
+                                            stationId++;
+                                        });
+                                        matchContext.setOccupiedStations([...matchContext.occupiedStations, ...occupiedStationsArray]);
+                                        matchContext.setOccupants([...matchContext.occupants, ...occupantsArray]);
+                                        matchContext.setOngoingMatches([...matchContext.ongoingMatches, ...OngoingMatchesArray]);
                                     setStationMatches(stationMatchesArray);
                                 }}>
                                 {'Calculate'}
