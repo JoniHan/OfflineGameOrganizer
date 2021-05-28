@@ -102,7 +102,6 @@ export const RoundRobinView = () => {
                                     };
                                     const matches = roundRobinMatches(poolContext.pools);
                                     let stationId = 0;
-                                    let OngoingMatchesArray: string[] = [];
                                     matches.forEach((players: IPlayerInfo[]) => {
                                         const p1 = players[0].name.trim();
                                         const p2 = players[1].name.trim();
@@ -118,7 +117,6 @@ export const RoundRobinView = () => {
                                         stationMatchesArray[stationId].push(matchObject);
                                         stationId++;
                                     });
-                                    matchContext.setOngoingMatches([...matchContext.ongoingMatches, ...OngoingMatchesArray]);
                                     setStationMatches(stationMatchesArray);
                                 }}>
                                 {'Calculate'}
