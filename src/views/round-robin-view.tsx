@@ -96,15 +96,12 @@ export const RoundRobinView = () => {
                         <ButtonWrapper className={'col-md-12'}>
                             <Button disabled={(stationCount > 0 && poolCount > 0) ? false : true} className={'btn btn-primary form-control'} onClick={
                                 () => {
-                                    // TODO: Fix a bug where it matches the same person on different stations
                                     const stationMatchesArray: IStationMatch[][] = [];
                                     for (let i = 0; i < stationCount; i++) {
                                         stationMatchesArray.push([]);
                                     };
                                     const matches = roundRobinMatches(poolContext.pools);
                                     let stationId = 0;
-                                    let occupiedStationsArray: number[] = [];
-                                    let occupantsArray: string[] = [];
                                     let OngoingMatchesArray: string[] = [];
                                     matches.forEach((players: IPlayerInfo[]) => {
                                         const p1 = players[0].name.trim();
@@ -119,20 +116,9 @@ export const RoundRobinView = () => {
                                         }
                                         const matchObject: IStationMatch = {matchId: uuidv4(), p1Id: players[0].id, p2Id: players[1].id, matchCaption: `${p1} VS. ${p2}`};
                                         stationMatchesArray[stationId].push(matchObject);
-
-                                        if (OngoingMatchesArray.indexOf(matchObject.matchId) === -1 && occupiedStationsArray.indexOf(stationId) === -1 && occupantsArray.indexOf(players[0].id) === -1 && matchContext.occupants.indexOf(players[1].id) === -1) {
-                                                // setup not reserved, players not playing, match not ongoing, fix a game
-                                                occupiedStationsArray.push(stationId);
-                                                occupantsArray.push(players[0].id);
-                                                occupantsArray.push(players[1].id);
-                                                OngoingMatchesArray.push(matchObject.matchId);
-                                            }
-                                            
-                                            stationId++;
-                                        });
-                                        matchContext.setOccupiedStations([...matchContext.occupiedStations, ...occupiedStationsArray]);
-                                        matchContext.setOccupants([...matchContext.occupants, ...occupantsArray]);
-                                        matchContext.setOngoingMatches([...matchContext.ongoingMatches, ...OngoingMatchesArray]);
+                                        stationId++;
+                                    });
+                                    matchContext.setOngoingMatches([...matchContext.ongoingMatches, ...OngoingMatchesArray]);
                                     setStationMatches(stationMatchesArray);
                                 }}>
                                 {'Calculate'}
