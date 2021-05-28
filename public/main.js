@@ -16,6 +16,7 @@ function createWindow() {
       nodeIntegration: true
     }
   });
+  win.setMenuBarVisibility(false)
 
   // and load the index.html of the app.
   // win.loadFile("index.html");
