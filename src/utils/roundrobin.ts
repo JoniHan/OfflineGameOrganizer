@@ -4,8 +4,9 @@ var robin = require('roundrobin');
 
 export const roundRobinMatches = (pools: string[]) => {
     const matchesPerPool = pools.map(pool => {
-        const singlePool = pool.split(',');
-        const matchesSinglePool = robin(singlePool.length, singlePool);
+        const singlePoolArray = pool.split(',');
+        const indexedSinglePoolArray = singlePoolArray.map(pool => uuidv4() + ',' + pool);
+        const matchesSinglePool = robin(indexedSinglePoolArray.length, indexedSinglePoolArray);
         return matchesSinglePool;
     });
     const allRRMatches = allMatches(matchesPerPool);
@@ -17,8 +18,11 @@ export const allMatches = (pools: [][][]) => {
     pools.forEach(pool => {
         pool.forEach(round => {
             round.forEach(match => {
-                const p1: IPlayerInfo = {id: uuidv4(), name: match[0]}
-                const p2: IPlayerInfo = {id: uuidv4(), name: match[1]}
+                const infoArray: string[] = match;
+                const p1Info: IPlayerInfo = { id: infoArray[0].split(',')[0], name: infoArray[0].split(',')[1] };
+                const p2Info: IPlayerInfo = { id: infoArray[1].split(',')[0], name: infoArray[1].split(',')[1] };
+                const p1: IPlayerInfo = p1Info;
+                const p2: IPlayerInfo = p2Info;
                 const playerArray: IPlayerInfo[] = [p1, p2];
                 matchArray.push(playerArray);
             });

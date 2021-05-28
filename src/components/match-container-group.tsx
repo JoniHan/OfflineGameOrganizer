@@ -20,7 +20,7 @@ export const MatchContainerGroup: React.FC<IMatchContainerGroupProps> = (props) 
         (stationMatches, idx) => {
             return (
                 <Container className={'col-md-6'} key={idx}>
-                    <MatchContainer matches={stationMatches} stationId={idx + 1}></MatchContainer>
+                    <MatchContainer matches={stationMatches} stationId={idx}></MatchContainer>
                 </Container>
             )
         }

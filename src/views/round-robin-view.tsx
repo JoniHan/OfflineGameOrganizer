@@ -7,7 +7,6 @@ import PoolInputGroup from '../components/pool-input-group';
 import PoolContext from '../context/pool';
 import { roundRobinMatches } from '../utils/roundrobin';
 import { v4 as uuidv4 } from 'uuid';
-import MatchContext from '../context/match';
 
 const TitleWrapper = styled.div`
     display: flex;
@@ -39,7 +38,6 @@ export const RoundRobinView = () => {
     const [poolCount, setPoolCount] = React.useState(0);
     const [stationMatches, setStationMatches] = React.useState([[]] as IStationMatch[][]);
     const poolContext = React.useContext(PoolContext);
-    const matchContext = React.useContext(MatchContext);
 
     return (
         <>
@@ -113,7 +111,7 @@ export const RoundRobinView = () => {
                                         if (stationId === stationCount) {
                                             stationId = 0;
                                         }
-                                        const matchObject: IStationMatch = {matchId: uuidv4(), p1Id: players[0].id, p2Id: players[1].id, matchCaption: `${p1} VS. ${p2}`};
+                                        const matchObject: IStationMatch = { matchId: uuidv4(), p1Id: players[0].id, p2Id: players[1].id, matchCaption: `${p1} VS. ${p2}` };
                                         stationMatchesArray[stationId].push(matchObject);
                                         stationId++;
                                     });

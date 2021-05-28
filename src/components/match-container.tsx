@@ -72,7 +72,7 @@ const ButtonRowWrapper = styled.div`
 `;
 
 export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
-    
+
     const matchContext = React.useContext(MatchContext);
 
     const elementArray: JSX.Element[] = props.matches.map(
@@ -90,7 +90,7 @@ export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
                                         const completedMatchIndex = matchContext.completedMatches.indexOf(match.matchId);
                                         const completedMatchesRemovedArray = matchContext.completedMatches;
                                         completedMatchesRemovedArray.splice(completedMatchIndex, 1);
-                                        matchContext.setOngoingMatches([...completedMatchesRemovedArray]);
+                                        matchContext.setCompletedMatches([...completedMatchesRemovedArray]);
                                     }
                                 }
                             >
@@ -115,6 +115,18 @@ export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
                                         const ongoingMatchesRemovedArray = matchContext.ongoingMatches;
                                         ongoingMatchesRemovedArray.splice(ongoingMatchIndex, 1);
                                         matchContext.setOngoingMatches([...ongoingMatchesRemovedArray]);
+
+                                        const occupiedStationIndex = matchContext.occupiedStations.indexOf(props.stationId);
+                                        const occupiedStationsRemovedArray = matchContext.occupiedStations;
+                                        occupiedStationsRemovedArray.splice(occupiedStationIndex, 1);
+                                        matchContext.setOccupiedStations([...occupiedStationsRemovedArray]);
+
+                                        const occupiedPlayersRemovedArray = matchContext.occupiedPlayers;
+                                        const p1OccupiedIndex = matchContext.occupiedPlayers.indexOf(match.p1Id);
+                                        occupiedPlayersRemovedArray.splice(p1OccupiedIndex, 1);
+                                        const p2OccupiedIndex = matchContext.occupiedPlayers.indexOf(match.p2Id);
+                                        occupiedPlayersRemovedArray.splice(p2OccupiedIndex, 1);
+                                        matchContext.setOccupiedPlayers([...occupiedPlayersRemovedArray]);
                                     }
                                 }
                             >
@@ -127,12 +139,30 @@ export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
                                         matchContext.setCompletedMatches([...matchContext.completedMatches, match.matchId]);
                                         const ongoingMatchIndex = matchContext.ongoingMatches.indexOf(match.matchId);
                                         const ongoingMatchesRemovedArray = matchContext.ongoingMatches;
-
                                         if (ongoingMatchIndex > -1) {
                                             ongoingMatchesRemovedArray.splice(ongoingMatchIndex, 1);
+                                            matchContext.setOngoingMatches([...ongoingMatchesRemovedArray]);
                                         }
-                                        
-                                        matchContext.setOngoingMatches([...ongoingMatchesRemovedArray]);
+
+                                        const occupiedStationIndex = matchContext.occupiedStations.indexOf(props.stationId);
+                                        const occupiedStationsRemovedArray = matchContext.occupiedStations;
+                                        if (occupiedStationIndex > -1) {
+                                            occupiedStationsRemovedArray.splice(occupiedStationIndex, 1);
+                                            matchContext.setOccupiedStations([...occupiedStationsRemovedArray]);
+                                        }
+
+                                        const p1OccupiedIndex = matchContext.occupiedPlayers.indexOf(match.p1Id);
+                                        const p2OccupiedIndex = matchContext.occupiedPlayers.indexOf(match.p2Id);
+                                        const occupiedPlayersRemovedArray = matchContext.occupiedPlayers;
+                                        if (p1OccupiedIndex > -1 || p2OccupiedIndex > -1) {
+                                            if (p1OccupiedIndex > -1) {
+                                                occupiedPlayersRemovedArray.splice(matchContext.occupiedPlayers.indexOf(match.p1Id), 1);
+                                            }
+                                            if (p2OccupiedIndex > -1) {
+                                                occupiedPlayersRemovedArray.splice(matchContext.occupiedPlayers.indexOf(match.p2Id), 1);
+                                            }
+                                            matchContext.setOccupiedPlayers([...occupiedPlayersRemovedArray]);
+                                        }
                                     }
                                 }
                             >
@@ -152,8 +182,11 @@ export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
                             onClick={
                                 () => {
                                     matchContext.setOngoingMatches([...matchContext.ongoingMatches, match.matchId]);
+                                    matchContext.setOccupiedPlayers([...matchContext.occupiedPlayers, match.p1Id, match.p2Id]);
+                                    matchContext.setOccupiedStations([...matchContext.occupiedStations, props.stationId]);
                                 }
                             }
+                            disabled={(matchContext.occupiedPlayers.indexOf(match.p1Id) > -1 || matchContext.occupiedPlayers.indexOf(match.p2Id) > -1 || matchContext.occupiedStations.indexOf(props.stationId) > -1) ? true : false}
                         >
                             {'Start match'}
                         </Button>
@@ -168,7 +201,7 @@ export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
                                     if (ongoingMatchIndex > -1) {
                                         ongoingMatchesRemovedArray.splice(ongoingMatchIndex, 1);
                                     }
-                                    
+
                                     matchContext.setOngoingMatches([...ongoingMatchesRemovedArray]);
                                 }
                             }
@@ -182,7 +215,7 @@ export const MatchContainer: React.FC<IMatchContainerProps> = (props) => {
     );
     return (
         <Div>
-            <h3>{`Matches for station ${props.stationId}`}</h3>
+            <h3>{`Matches for station ${props.stationId + 1}`}</h3>
             {elementArray}
         </Div>
     );
