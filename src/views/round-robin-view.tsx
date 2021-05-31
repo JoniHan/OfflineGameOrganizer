@@ -7,6 +7,7 @@ import PoolInputGroup from '../components/pool-input-group';
 import PoolContext from '../context/pool';
 import { roundRobinMatches } from '../utils/roundrobin';
 import { v4 as uuidv4 } from 'uuid';
+import MatchContext from '../context/match';
 
 const TitleWrapper = styled.div`
     display: flex;
@@ -38,6 +39,7 @@ export const RoundRobinView = () => {
     const [poolCount, setPoolCount] = React.useState(0);
     const [stationMatches, setStationMatches] = React.useState([[]] as IStationMatch[][]);
     const poolContext = React.useContext(PoolContext);
+    const matchContext = React.useContext(MatchContext);
 
     return (
         <>
@@ -94,6 +96,13 @@ export const RoundRobinView = () => {
                         <ButtonWrapper className={'col-md-12'}>
                             <Button disabled={(stationCount > 0 && poolCount > 0) ? false : true} className={'btn btn-primary form-control'} onClick={
                                 () => {
+                                    // reset state
+                                    matchContext.setCompletedMatches([]);
+                                    matchContext.setOccupiedPlayers([]);
+                                    matchContext.setOccupiedPlayers([]);
+                                    matchContext.setOngoingMatches([]);
+                                    matchContext.setOccupiedStations([]);
+
                                     const stationMatchesArray: IStationMatch[][] = [];
                                     for (let i = 0; i < stationCount; i++) {
                                         stationMatchesArray.push([]);
@@ -113,6 +122,7 @@ export const RoundRobinView = () => {
                                         }
                                         const matchObject: IStationMatch = { matchId: uuidv4(), p1Id: players[0].id, p2Id: players[1].id, matchCaption: `${p1} VS. ${p2}` };
                                         stationMatchesArray[stationId].push(matchObject);
+
                                         stationId++;
                                     });
                                     setStationMatches(stationMatchesArray);
