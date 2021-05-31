@@ -43,7 +43,7 @@ export const ChallongeConnectionView = () => {
         <>
             <TitleWrapper>
                 <h1>Challonge API</h1>
-                <p>Fill in your username and API key to use the functionality</p>
+                <p>Fill in your API key to use the functionality</p>
             </TitleWrapper>
             <div className={'form-group'}>
                 <div className={'col-md-12'}>
